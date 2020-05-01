@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru" style="background-color: #eef;">
+<head>
+    <title>WeatherViewer - тестовое задание, веб-приложение для просмотра данных о погоде</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <META HTTP-EQUIV="REFRESH" CONTENT="300">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="WEB-Application for checking weather in your city. Testwork for centre-it.com. Using Java/Spring Boot for back-end part, Bootstrap 4 (Flex) for front-end.">
+    <meta name="author" content="Andrey Yakunin">
+    <!-- Google FONT "Montserrat" -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,800;1,300&display=swap" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    <!-- Plugin CSS -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="h-100" style="font-family: 'Montserrat', sans-serif;">
+<!-- Header TOP -->
+<div class="header-top container-fluid border-bottom" style="background-color: #eef">
+    <form action="#" method="get">
+    <div class="container d-md-flex justify-content-center align-items-end">
+        <div class="form-group mx-3 ">
+            <label for="serviceSelect">1. choose service provider</label>
+            <select name="serviceSelect" class="form-control" id="serviceSelect">
+                <option {{weatherstack}}>weatherstack</option>
+                <option {{Яндекс.Погода}}>Яндекс.Погода</option>
+            </select>
+        </div>
+        <div class="form-group mx-3">
+            <label for="locationSelect">2. choose your location</label>
+            <select name="locationSelect" class="form-control" id="locationSelect">
+                <option>Moscow</option>
+                <option>Ekaterinburg</option>
+                <option>Chelyabinsk</option>
+            </select>
+        </div>
+        <div class="form-group mx-3">
+            <button type="submit" class="btn btn-outline-primary" >Refresh</button>
+        </div>
+    </div>
+    </form>
+</div>
+<div class="container content d-flex flex-column justify-content-center align-items-center pt-3">
+    <h1>{{location}}, {{country}}</h1>
+    <div class="weather d-flex">
+        <div class="cloud d-flex flex-column pr-3 align-items-center justify-content-center">
+            <img class="img-fluid" src="{{weatherImage}}" alt="{{weatherDescription}}">
+            <p>{{weatherDescription}}</p>
+        </div>
+        <div class="info d-flex flex-column border-left pl-3 justify-content-center" >
+            <div class="d-flex flex-column temperature align-items-center border-bottom pb-1">
+                <div class="count pr-1" style="font-size: 40px; line-height: 1;">{{temperature}} °C</div>
+                <div class="description">Temperature</div>
+            </div>
+            <div class="d-flex flex-column humidity align-items-center pt-1">
+                <div class="description">Humidity</div>
+                <div class="count pr-1" style="font-size: 40px; line-height: 1;">{{humidity}} %</div>
+            </div>
+        </div>
+    </div>
+    <div class="serviceProvider pt-3">Service provided by <a href="{{serviceLink}}">{{serviceProvider}}</a></div>
+    <div class="time"><p style="font-family: Montserrat; font-weight:300; font-style:italic;">Last updated: {{currentTime}}</p></div>
+</div>
+<div id="footer" class="container-fluid border-top" style="background-color: #eef;">
+    <div class="container pt-3">
+        <div class="author">
+            <p>Author: <a href="https://vk.com/id22066578">Andrey Yakunin</a></p>
+            <ul>
+                {{#list}}
+                    <li>{{name}}</li>
+                {{/list}}
+            </ul>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
