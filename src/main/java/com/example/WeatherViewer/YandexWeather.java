@@ -1,6 +1,11 @@
 package com.example.WeatherViewer;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +17,31 @@ public class YandexWeather {
 
     private static String accessKey = "4c1c3e7b-707e-4ced-b45e-3524c48d42dc";
     private static String startGetString = "https://api.weather.yandex.ru/v1/forecast?";
-    private static Map<String,String> cities = new HashMap<String,String>();
+    private static Map<String,String> cities = new HashMap<>();
+
+    public static void getActualWeather(WeatherController weatherController){
+
+        System.out.print("New instance of Яндекс.Погода creating: "+ weatherController.getLocation()+" ");
+
+        try{
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("X-Yandex-API-Key", YandexWeather.getAccessKey());
+            HttpEntity<YandexWeather> httpEntity = new HttpEntity<>(null, headers);
+            ResponseEntity<YandexWeather> result = restTemplate.exchange(YandexWeather.getURI(weatherController.getLocation()), HttpMethod.GET,httpEntity,YandexWeather.class);
+            YandexWeather yandexWeather = result.getBody();
+            weatherController.setWeatherImageURL(YandexWeather.getIconURL((String) yandexWeather.fact.get("icon")));
+            weatherController.setWeatherDescription(YandexWeather.getWeatherCondition((String) yandexWeather.fact.get("condition")));
+            weatherController.setTemperature((int) yandexWeather.fact.get("temp"));
+            weatherController.setHumidity((int) yandexWeather.fact.get("humidity"));
+            weatherController.setServiceLink((String) yandexWeather.info.get("url"));
+            System.out.println("Done!");
+        }
+        catch (NullPointerException e){
+            System.out.println("Exception! "+e);
+        }
+
+    }
     static{
       cities.put("Chelyabinsk","lat=55.164440&lon=61.436844");
       cities.put("Moscow","lat=55.751244&lon=37.618423");
@@ -52,7 +81,7 @@ public class YandexWeather {
       cities.put("Fryazino","lat=55.950001&lon=38.049999");
       cities.put("Vologda","lat=59.222340&lon=39.882431");
       cities.put("Novosibirsk","lat=55.018803&lon=82.933952");
-    };
+    }
     public static String getIconURL(String icon){
         return "https://yastatic.net/weather/i/icons/blueye/color/svg/"+icon+".svg";
     }
