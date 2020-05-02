@@ -1,6 +1,7 @@
 # WeatherViewer
 
 WEB APP provides current weather in different locations.
+APP using SPRING Boot, Jackson for parsing JSON, Mustache for templates, Bootstrap 4 (flex) for styling
 
 Webpage creates request to selected weather-API in each case of:
 1. Opening page
@@ -19,3 +20,4 @@ APP provides 3 types of data:
 
 APP dont use any SQL/NoSQL storage.
 APP using COOKIE (2 fields) to save chosen service provider and location.
+
