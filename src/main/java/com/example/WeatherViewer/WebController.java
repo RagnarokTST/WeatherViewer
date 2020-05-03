@@ -46,17 +46,9 @@ public class WebController {
         model.put("serviceProvider",actual.getServiceProvider());
         model.put("currentTime",actual.getCurrentTime());
 
-
-
-
-
-
-
         //adding COOKIE to save user's choice
-        Cookie cookieService = new Cookie("service", serviceProvider);
-        Cookie cookieLocation = new Cookie("location", location);
-        response.addCookie(cookieService);
-        response.addCookie(cookieLocation);
+        response.addCookie(new Cookie("service", serviceProvider));
+        response.addCookie(new Cookie("location", location));
 
         return "main";
     }
